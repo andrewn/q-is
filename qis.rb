@@ -8,7 +8,7 @@ class Whois::Answer
   def to_json(*a)   
     props = {}
     Whois::Answer::Parser::PROPERTIES.each do | prop |
-      props[prop.to_s] = eval( prop.to_s )
+      props[prop.to_s] = eval( prop.to_s ) unless prop == :disclaimer
     end
     return props.to_json(*a)
   end
