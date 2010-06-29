@@ -1,2 +1,2 @@
-require 'whois'
+require 'qis'
 run Sinatra::Application
