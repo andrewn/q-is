@@ -23,3 +23,9 @@ get '/domains/:domain_name' do | domain |
   answer = w.query( domain )
   JSON.pretty_generate answer
 end
+
+get '/domains/:domain_name/available' do | domain |
+  w = Whois::Client.new
+  answer = w.query( domain )
+  answer.available?.to_s
+end
