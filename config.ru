@@ -1,2 +1,2 @@
-require 'hello'
+require 'whois'
 run Sinatra::Application
