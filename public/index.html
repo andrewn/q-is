@@ -1,1 +1,66 @@
-<h1>Domains</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script>
+      Qis = {
+        
+        url: '/domain/{domain}/available',
+        
+        search: function ( domain ) {
+          $(Qis).trigger('search-start', domain);
+          var searchUrl = Qis.url.replace( '{domain}', domain );
+          $.get(
+            searchUrl,
+            {},
+            function ( data ) {
+              $(Qis).trigger({
+                type: 'result',
+                available: ( data === 'true' ? true : false )
+              });
+            }
+          );
+          
+        }
+        
+        
+      };
+            
+      function init() {
+        $('#search').submit( function ( evt ) {
+          evt.preventDefault();
+          Qis.search( $('input:first', this).val() );
+          return false;
+        });
+        
+        $(Qis).bind(
+          'result',
+          function (evt) {
+            $('#searching').hide();
+            $('#results').text( evt.available ? 'Available' : 'Not available' );
+          }
+        );
+        
+        $(Qis).bind(
+          'search-start',
+          function ( evt ) {
+            $('#searching').show();
+          }
+        )
+      }
+            
+      $( init );
+    </script>
+  </head>
+  
+  <body>
+    <h1>Domain search</h1>
+    <form id="search">
+      <label for="domain">Domain name:</label>
+      <input type="search" name="domain" value="" id="domain" />
+      <input type="submit" value="Search" />
+    </form>
+    <p id="searching" style="display:none;">Searching</p>
+    <p id="results"></p>
+  </body>
+</html>
