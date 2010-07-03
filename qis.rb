@@ -18,6 +18,8 @@ get '/' do
   "Up"
 end
 
+# API
+
 get '/domain/:domain_name' do | domain |
   content_type :json
   answer = Qis.domain_info_for(domain)
@@ -28,6 +30,15 @@ get '/domain/:domain_name/available' do | domain |
   answer = Qis.domain_info_for(domain)
   answer.available?.to_s
 end
+
+# Web
+#set :public,   File.expand_path(File.dirname(__FILE__) + '/../public')
+
+get '/domain/' do
+  send_file 'public/index.html'
+end
+
+# Helpers
 
 class Qis
   def self.domain_info_for( domain )
