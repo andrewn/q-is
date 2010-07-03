@@ -18,14 +18,22 @@ get '/' do
   "Up"
 end
 
-get '/domains/:domain_name' do | domain |
-  w = Whois::Client.new
-  answer = w.query( domain )
+get '/domain/:domain_name' do | domain |
+  content_type :json
+  answer = Qis.domain_info_for(domain)
   JSON.pretty_generate answer
 end
 
-get '/domains/:domain_name/available' do | domain |
-  w = Whois::Client.new
-  answer = w.query( domain )
+get '/domain/:domain_name/available' do | domain |
+  answer = Qis.domain_info_for(domain)
   answer.available?.to_s
 end
+
+class Qis
+  def self.domain_info_for( domain )
+    w = Whois::Client.new
+    answer = w.query( domain )
+    answer
+  end
+end
+  
