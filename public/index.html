@@ -16,7 +16,8 @@
             function ( data ) {
               $(Qis).trigger({
                 type: 'result',
-                available: ( data === 'true' ? true : false )
+                available: ( data === 'true' ? true : false ),
+                search: domain
               });
             }
           );
@@ -37,7 +38,7 @@
           'result',
           function (evt) {
             $('#searching').hide();
-            $('#results').text( evt.available ? 'Available' : 'Not available' );
+            $('#results').text( evt.available ? evt.search + ': Available' : evt.search + ': Not available' );
           }
         );
         
